@@ -15,6 +15,7 @@ class _home_screenState extends State<home_screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        
         title: const Text("weather App"),
       ),
       body: Container(
