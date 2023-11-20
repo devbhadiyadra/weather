@@ -1,0 +1,3 @@
+class string {
+  string._();
+}
