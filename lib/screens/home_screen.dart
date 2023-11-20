@@ -1,12 +1,15 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
+import 'package:weather/weather.dart';
 import 'package:weatherapp/bloc/weather_bloc.dart';
-import 'package:weatherapp/styles/colors.dart';
-import 'package:weatherapp/styles/text.dart';
+import 'package:http/http.dart' as http;
+import 'package:weatherapp/data/my_data.dart';
 
 class home_screen extends StatefulWidget {
   String? city;
@@ -23,6 +26,25 @@ class _home_screenState extends State<home_screen> {
     setState(() {
       widget.city = city_name_controller.text;
     });
+  }
+
+  search() async {
+    WeatherFactory wf = WeatherFactory(API_KEY);
+    Weather weather =
+        await wf.currentWeatherByCityName(city_name_controller.text);
+
+    Response response = await http.get(Uri.parse(
+        "https://api.openweathermap.org/data/2.5/weather?lat=${weather.latitude}&lon=${weather.longitude}&appid=ce1463449767f059b255fa59d6345b70"));
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      // print(data.toString());
+      final name = data['name'];
+
+      // print('name ${name}');
+
+      print(response.body.toString());
+    }
   }
 
   @override
@@ -101,7 +123,7 @@ class _home_screenState extends State<home_screen> {
                                 ),
                                 suffixIcon: IconButton(
                                     onPressed: () {
-                                      print("clicked");
+                                      search();
                                     },
                                     icon: const Icon(Icons.search)),
                                 hintText: "Search",

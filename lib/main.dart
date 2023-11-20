@@ -30,8 +30,8 @@ class _MyAppState extends State<MyApp> {
                 debugShowCheckedModeBanner: false,
                 home: BlocProvider<WeatherBloc>(
                     create: (context) => WeatherBloc()
-                      ..add(fetchWeather(snap.data!))
-                      ..add(fetchWeathercity("surat")),
+                      ..add(fetchWeather(snap.data!)),
+                      // ..add(fetchWeathercity("surat")),
                     child: home_screen()));
           } else {
             return const MaterialApp(
