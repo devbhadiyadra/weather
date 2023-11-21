@@ -7,6 +7,8 @@ import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 
 import 'package:weatherapp/bloc/weather_bloc.dart';
+import 'package:weatherapp/helper_function/helper.dart';
+import 'package:weatherapp/styles/text.dart';
 
 class home_screen extends StatefulWidget {
   String? city;
@@ -76,34 +78,37 @@ class _home_screenState extends State<home_screen> {
               padding: const EdgeInsets.all(18.0),
               child: BlocBuilder<WeatherBloc, WeatherState>(
                 builder: (context, state) {
-                  if (state is WeatherLoading) {
-                    return const Center(
-                      child: Text(
-                        "Fetching your location...",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                    );
-                  } else if (state is WeatherSuccess) {
+                  // if (state is WeatherLoading) {
+                  //   return const Center(
+                  //     child: Text(
+                  //       "Fetching your Current location...",
+                  //       style: TextStyle(
+                  //           fontSize: 20, fontWeight: FontWeight.bold),
+                  //     ),
+                  //   );
+                  // } else
+                  if (state is WeatherSuccess) {
                     return SizedBox(
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Gap(20),
+                          const Gap(40),
                           Row(
                             children: [
                               const Icon(Icons.location_on),
                               const Gap(10),
                               Text('${state.weather.areaName}',
                                   style: const TextStyle(
-                                      fontSize: 30, color: Colors.black)),
+                                      fontSize: 35, color: Colors.black)),
                             ],
                           ),
                           Gap(MediaQuery.of(context).size.height / 12),
                           Column(
                             children: [
+                              helper
+                                  .getCode(state.weather.weatherConditionCode!),
                               Text(
                                 '${state.weather.temperature!.celsius!.round()}°C',
                                 style: const TextStyle(
@@ -227,7 +232,13 @@ class _home_screenState extends State<home_screen> {
                     );
                   } else {
                     return const Center(
-                      child: CircularProgressIndicator(),
+                      child: Text(
+                        "Fetching your Loction...",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
                     );
                   }
                 },

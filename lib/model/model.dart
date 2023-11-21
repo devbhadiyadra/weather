@@ -13,6 +13,8 @@ class model {
   int? sunset;
   double? temp_max;
   double? temp_min;
+  int? weather_id;
+  String? desc;
 
   model({this.location}) {
     location = this.location;
@@ -30,9 +32,12 @@ class model {
 
       String getName = data['name'];
 
-      // List<Map> weather = data['weather'];
+      final weather = data['weather'];
 
-      // Map getWeatherDesc = weather['description'];
+      final getWeatherId = weather[0]['id'];
+      // print(getWeatherId);
+
+      final getWeatherDesc = weather[0]['description'];
 
       Map sys = data['sys'];
       int getSunrise = sys['sunrise'];
@@ -51,6 +56,8 @@ class model {
       sunset = getSunset;
       temp_min = getMintemp;
       temp_max = getMaxtemp;
+      weather_id=getWeatherId;
+      desc=getWeatherDesc;
 
       // print(response.body.toString());
     } else {

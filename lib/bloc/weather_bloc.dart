@@ -25,19 +25,19 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       }
     });
 
-    on<fetchWeathercity>((event, emit) async {
-      emit(WeatherLoading());
+    // on<fetchWeathercity>((event, emit) async {
+    //   emit(WeatherLoading());
 
-      try {
-        WeatherFactory wf = WeatherFactory(API_KEY, language: Language.ENGLISH);
+    //   try {
+    //     WeatherFactory wf = WeatherFactory(API_KEY, language: Language.ENGLISH);
 
-        Weather weather = await wf.currentWeatherByCityName(event.cityName);
+    //     Weather weather = await wf.currentWeatherByCityName(event.cityName);
 
-        print(weather);
-        emit(WeatherSuccess(weather));
-      } catch (e) {
-        emit(WeatherError());
-      }
-    });
+    //     print(weather);
+    //     emit(WeatherSuccess(weather));
+    //   } catch (e) {
+    //     emit(WeatherError());
+    //   }
+    // });
   }
 }

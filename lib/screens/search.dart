@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
@@ -34,14 +35,17 @@ double? temp_min_C;
 double? temp_max_C;
 String? sunrise_time;
 String? sunset_time;
+int? w_id;
+String? desc;
 
 class _searchState extends State<search> {
   Future<void> start(city) async {
     try {
       model obj = model(location: city);
+
       await obj.getData();
       state = true;
-      print(obj.sunrise);
+      // print(obj.sunrise);
       setState(() {
         temp = obj.temp!;
         name = obj.name.toString();
@@ -49,6 +53,8 @@ class _searchState extends State<search> {
         sunset = obj.sunset!;
         temp_max = obj.temp_max!;
         temp_min = obj.temp_min!;
+        w_id = obj.weather_id;
+        desc = obj.desc;
       });
 
       sunrise_time = helper.getDate(sunrise);
@@ -58,6 +64,7 @@ class _searchState extends State<search> {
       temp_max_C = helper.fahrenheitToCelsius(temp_max);
 
       temp_min_C = helper.fahrenheitToCelsius(temp_min);
+      print(w_id.toString());
     } catch (e) {
       Fluttertoast.showToast(msg: "please enter valid city name");
     }
@@ -193,18 +200,17 @@ class _searchState extends State<search> {
                           Gap(MediaQuery.of(context).size.height / 12),
                           Column(
                             children: [
+                              helper.getCode(w_id!),
                               Text(
                                 '${temp_value?.round()}°C',
                                 style: const TextStyle(
                                     fontSize: 30, color: Colors.white),
                               ),
                               const Gap(15),
-                              // Center(
-                              //     child: Text(
-                              //         state.weather.weatherDescription!
-                              //             .toUpperCase(),
-                              //         style: const TextStyle(
-                              //             fontSize: 25, color: Colors.white))),
+                              Center(
+                                  child: Text(desc.toString().toUpperCase(),
+                                      style: const TextStyle(
+                                          fontSize: 25, color: Colors.white))),
                               const Gap(5),
                               Center(
                                   child: Text(

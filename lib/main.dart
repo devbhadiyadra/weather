@@ -6,6 +6,7 @@ import 'package:gap/gap.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weatherapp/bloc/weather_bloc.dart';
 import 'package:weatherapp/screens/home_screen.dart';
+import 'package:weatherapp/screens/splash_screen.dart';
 import 'package:weatherapp/screens/search.dart';
 
 void main() {
@@ -54,14 +55,7 @@ class _MyAppState extends State<MyApp> {
                 ));
           } else {
             return const MaterialApp(
-              home: Scaffold(
-                body: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [CircularProgressIndicator()],
-                  ),
-                ),
-              ),
+              home: Scaffold(body: splash_screen()),
             );
           }
         });

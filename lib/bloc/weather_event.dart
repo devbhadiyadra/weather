@@ -14,9 +14,9 @@ class fetchWeather extends WeatherEvent {
   List<Object> get props => [position];
 }
 
-class fetchWeathercity extends WeatherEvent {
-  final String cityName;
-  // final String city_name;
-  fetchWeathercity(this.cityName);
-  List<Object> get props => [cityName];
-}
+// class fetchWeathercity extends WeatherEvent {
+//   final String cityName;
+//   // final String city_name;
+//   fetchWeathercity(this.cityName);
+//   List<Object> get props => [cityName];
+// }
