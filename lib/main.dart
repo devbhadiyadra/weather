@@ -6,6 +6,7 @@ import 'package:gap/gap.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weatherapp/bloc/weather_bloc.dart';
 import 'package:weatherapp/screens/home_screen.dart';
+import 'package:weatherapp/screens/search.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,6 +21,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  List<Widget> widgets = [home_screen(), const search()];
+  int index = 0;
+  btnstate() {}
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -28,11 +32,26 @@ class _MyAppState extends State<MyApp> {
           if (snap.hasData) {
             return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                home: BlocProvider<WeatherBloc>(
-                    create: (context) => WeatherBloc()
-                      ..add(fetchWeather(snap.data!)),
+                home: Scaffold(
+                  bottomNavigationBar: BottomNavigationBar(
+                      onTap: (value) {
+                        setState(() {
+                          index = value;
+                        });
+                      },
+                      currentIndex: index,
+                      items: const [
+                        BottomNavigationBarItem(
+                            icon: Icon(Icons.home), label: "home"),
+                        BottomNavigationBarItem(
+                            icon: Icon(Icons.search), label: "search"),
+                      ]),
+                  body: BlocProvider<WeatherBloc>(
+                      create: (context) =>
+                          WeatherBloc()..add(fetchWeather(snap.data!)),
                       // ..add(fetchWeathercity("surat")),
-                    child: home_screen()));
+                      child: widgets[index]),
+                ));
           } else {
             return const MaterialApp(
               home: Scaffold(
